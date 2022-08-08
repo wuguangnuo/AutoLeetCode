@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Lhelp {
         return Double.parseDouble(str);
     }
 
-    public int[] readAsArray(int lineNum) {
+    public int[] readAsArr(int lineNum) {
         String str = readLine(lineNum);
         return readAsArray(str);
     }
@@ -61,8 +62,9 @@ public class Lhelp {
     }
 
     public ListNode readAsListNode(int lineNum) {
-        int[] arr = readAsArray(lineNum);
-        if (arr == null || arr.length == 0)
+        String str = readLine(lineNum);
+        int[] arr = readAsArray(str);
+        if (arr.length == 0)
             return null;
         ListNode head = new ListNode(arr[0]), node = head;
         for (int i = 1; i < arr.length; i++) {
@@ -109,9 +111,15 @@ public class Lhelp {
         return str;
     }
 
-    public String[] readAsStrArray(int lineNum) {
+    public String[] readAsStrArr(int lineNum) {
         String str = readLine(lineNum);
         return readAsStrArray(str);
+    }
+
+    public List<String> readAsStrList(int lineNum) {
+        String str = readLine(lineNum);
+        String[] strArr = readAsStrArray(str);
+        return Arrays.asList(strArr);
     }
 
     public String[][] readAsStrGrid(int lineNum) {
@@ -126,6 +134,16 @@ public class Lhelp {
             grid[i] = readAsStrArray(split[i]);
         }
         return grid;
+    }
+
+    public char[] readAsCharArr(int lineNum) {
+        String str = readLine(lineNum);
+        String[] strArr = readAsStrArray(str);
+        char[] charArr = new char[strArr.length];
+        for (int i = 0; i < strArr.length; i++) {
+            charArr[i] = strArr[i].charAt(0);
+        }
+        return charArr;
     }
 
     public char[][] readAsCharGrid(int lineNum) {
@@ -203,6 +221,7 @@ public class Lhelp {
             String str;
             br = new BufferedReader(new FileReader(FILE_PATH));
             while ((str = br.readLine()) != null) {
+                if (str.trim().startsWith("//")) continue;
                 lineList.add(str.trim());
             }
         } catch (IOException e) {
@@ -223,11 +242,13 @@ public class Lhelp {
         mapping.put("int", "readAsInt");
         mapping.put("long", "readAsLong");
         mapping.put("double", "readAsDouble");
-        mapping.put("int[]", "readAsArray");
+        mapping.put("int[]", "readAsArr");
         mapping.put("int[][]", "readAsGrid");
         mapping.put("java.lang.String", "readAsStr");
-        mapping.put("java.lang.String[]", "readAsStrArray");
+        mapping.put("java.lang.String[]", "readAsStrArr");
         mapping.put("java.lang.String[][]", "readAsStrGrid");
+        mapping.put("java.util.List<java.lang.String>", "readAsStrList");
+        mapping.put("char[]", "readAsCharArr");
         mapping.put("char[][]", "readAsCharGrid");
         mapping.put("ListNode", "readAsListNode");
         mapping.put("TreeNode", "readAsTreeNode");

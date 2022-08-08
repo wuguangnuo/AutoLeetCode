@@ -33,7 +33,7 @@ public class Main {
                     StringBuilder temp = new StringBuilder();
                     Object[] params = new Object[parameters.length];
                     for (int i = 0; i < parameters.length; i++) {
-                        String typeName = parameters[i].getType().getTypeName();
+                        String typeName = parameters[i].getParameterizedType().getTypeName();
                         temp.append("参数").append(i + 1).append(": ")
                                 .append(typeName.substring(typeName.lastIndexOf(".") + 1))
                                 .append(" %").append(help.readLineShort(++lineNum)).append("%  ");
