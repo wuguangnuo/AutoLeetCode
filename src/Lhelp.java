@@ -122,6 +122,19 @@ public class Lhelp {
         return Arrays.asList(strArr);
     }
 
+    public List<List<Integer>> readAsListGrid(int lineNum) {
+        int[][] grid = readAsGrid(lineNum);
+        List<List<Integer>> ret = new ArrayList<>();
+        for (int[] g : grid) {
+            List<Integer> temp = new ArrayList<>();
+            for (int i : g) {
+                temp.add(i);
+            }
+            ret.add(temp);
+        }
+        return ret;
+    }
+
     public String[][] readAsStrGrid(int lineNum) {
         String str = readLine(lineNum);
         if (str == null || str.equals("[]"))
@@ -248,6 +261,7 @@ public class Lhelp {
         mapping.put("java.lang.String[]", "readAsStrArr");
         mapping.put("java.lang.String[][]", "readAsStrGrid");
         mapping.put("java.util.List<java.lang.String>", "readAsStrList");
+        mapping.put("java.util.List<java.util.List<java.lang.Integer>>", "readAsListGrid");
         mapping.put("char[]", "readAsCharArr");
         mapping.put("char[][]", "readAsCharGrid");
         mapping.put("ListNode", "readAsListNode");

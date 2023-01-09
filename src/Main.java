@@ -152,6 +152,12 @@ public class Main {
                 case "long[]":
                     ans = Arrays.toString((long[]) o);
                     break;
+                case "double[]":
+                    ans = Arrays.toString((double[]) o);
+                    break;
+                case "boolean[]":
+                    ans = Arrays.toString((boolean[]) o);
+                    break;
                 case "java.lang.String[]":
                     ans = Arrays.toString((String[]) o);
                     break;
