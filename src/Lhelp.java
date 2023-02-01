@@ -80,22 +80,23 @@ public class Lhelp {
         Integer[] arr = str2arr(str);
         if (arr == null || arr.length == 0)
             return null;
-        TreeNode root = new TreeNode(arr[0]), node = root;
+        int idx = 0;
+        TreeNode root = new TreeNode(arr[idx++]);
         Queue<TreeNode> queue = new LinkedList<>();
-        int i = 0;
-        while (node != null) {
-            if (2 * i + 1 < arr.length) {
-                Integer temp = arr[2 * i + 1];
-                node.left = temp == null ? null : new TreeNode(temp);
-                queue.add(node.left);
+        queue.add(root);
+
+        while (idx < arr.length) {
+            TreeNode poll = queue.poll();
+            assert poll != null;
+            Integer temp;
+            if ((temp = arr[idx++]) != null) {
+                poll.left = new TreeNode(temp);
+                queue.add(poll.left);
             }
-            if (2 * i + 2 < arr.length) {
-                Integer temp = arr[2 * i + 2];
-                node.right = temp == null ? null : new TreeNode(temp);
-                queue.add(node.right);
+            if ((temp = idx < arr.length ? arr[idx++] : null) != null) {
+                poll.right = new TreeNode(temp);
+                queue.add(poll.right);
             }
-            node = queue.poll();
-            i += 1;
         }
         return root;
     }
@@ -132,6 +133,13 @@ public class Lhelp {
             }
             ret.add(temp);
         }
+        return ret;
+    }
+
+    public List<List<String>> readAsListStrGrid(int lineNum) {
+        String[][] grid = readAsStrGrid(lineNum);
+        List<List<String>> ret = new ArrayList<>();
+        Arrays.stream(grid).forEach(e -> ret.add(new ArrayList<>(Arrays.asList(e))));
         return ret;
     }
 
@@ -216,7 +224,7 @@ public class Lhelp {
         String[] split = str.split(",");
         Integer[] arr = new Integer[split.length];
         for (int i = 0; i < arr.length; i++) {
-            if ("null".equals(split[i].trim())) {
+            if ("null".equals(split[i].trim()) || "".equals(split[i].trim())) {
                 arr[i] = null;
             } else {
                 arr[i] = Integer.parseInt(split[i].trim());
@@ -262,6 +270,7 @@ public class Lhelp {
         mapping.put("java.lang.String[][]", "readAsStrGrid");
         mapping.put("java.util.List<java.lang.String>", "readAsStrList");
         mapping.put("java.util.List<java.util.List<java.lang.Integer>>", "readAsListGrid");
+        mapping.put("java.util.List<java.util.List<java.lang.String>>", "readAsListStrGrid");
         mapping.put("char[]", "readAsCharArr");
         mapping.put("char[][]", "readAsCharGrid");
         mapping.put("ListNode", "readAsListNode");
