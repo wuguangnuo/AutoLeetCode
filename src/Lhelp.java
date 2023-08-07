@@ -149,8 +149,8 @@ public class Lhelp {
             return new String[0][0];
         str = str.replace("[[", "").replace("]]", "");
         String[] split = str.split("] *, *\\[");
-        int a = split.length, b = readAsStrArray(split[0]).length;
-        String[][] grid = new String[a][b];
+        int a = split.length;
+        String[][] grid = new String[a][0];
         for (int i = 0; i < grid.length; i++) {
             grid[i] = readAsStrArray(split[i]);
         }

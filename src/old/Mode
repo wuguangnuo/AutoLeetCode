@@ -1,0 +1,99 @@
+// 解题模板
+
+== ** ==
+// 线段树
+class SegmentTree {
+    static class Node {
+        Node left, right;
+        int val, add;
+    }
+
+    public static void update(Node node, int start, int end, int l, int r, int val) {
+        if (l <= start && r >= end) {
+            node.val += (end - start + 1) * val;
+            node.add += val;
+            return;
+        }
+        int mid = (start + end) >> 1;
+        pushDown(node, mid - start + 1, end - mid);
+        if (l <= mid) update(node.left, start, mid, l, r, val);
+        if (r > mid) update(node.right, mid + 1, end, l, r, val);
+        pushUp(node);
+    }
+
+    public static int query(Node node, int start, int end, int l, int r) {
+        if (l <= start && r >= end) return node.val;
+        int mid = (start + end) >> 1, ans = 0;
+        pushDown(node, mid - start + 1, end - mid);
+        if (l <= mid) ans += query(node.left, start, mid, l, r);
+        if (r > mid) ans += query(node.right, mid + 1, end, l, r);
+        return ans;
+    }
+
+    private static void pushUp(Node node) {
+        node.val = node.left.val + node.right.val;
+    }
+
+    private static void pushDown(Node node, int leftNum, int rightNum) {
+        if (node.left == null) node.left = new Node();
+        if (node.right == null) node.right = new Node();
+        if (node.add == 0) return;
+        node.left.val += node.add * leftNum;
+        node.right.val += node.add * rightNum;
+        node.left.add += node.add;
+        node.right.add += node.add;
+        node.add = 0;
+    }
+}
+== ** ==
+// 并查集
+int[] uf = new int[n];
+for (int i = 0; i < n; i++) {
+    uf[i] = i;
+}
+
+private int find(int[] uf, int a) {
+    return uf[a] == a ? a : find(uf, uf[a]);
+}
+
+private void union(int[] uf, int a, int b) {
+    uf[find(uf, b)] = find(uf, a);
+}
+== ** ==
+// 最大公约数
+private int gcd(int a, int b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+== ** ==
+// 质因数分解
+private static List<Integer> help(int x) {
+    Set<Integer> set = new HashSet<>();
+    if (x < 2) return new ArrayList<>();
+    int k = 2;
+    while (k <= x) {
+        if (k == x) {
+            set.add(k);
+            break;
+        } else if (x % k == 0) {
+            set.add(k);
+            x /= k;
+        } else k++;
+    }
+    return new ArrayList<>(set);
+}
+== ** ==
+// 判断素数
+private boolean isPrime(int num) { //判断一个数是否是素数
+    for (int i = 2; i * i <= num; i++) { //遍历到根号num
+        if (num % i == 0) //检查有无余数
+            return false;
+    }
+    return true;
+}
+
+== ** ==
+// 一般解题方法。
+树、二叉搜索树、字典树、链表、栈、堆（优先队列）、
+哈希表、数学、排序、位运算、状态压缩、动态规划DP、贪心、二分查找、
+双指针、单调栈、前缀和、滑动窗口、回溯、递归、分治、
+深度优先dfs、广度优先bfs、拓补排序、并查集、线段树、
